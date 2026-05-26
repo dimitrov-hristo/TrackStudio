@@ -5,12 +5,46 @@ Check out the [TrackStudio paper](https://arxiv.org/abs/2511.07624) for detailed
 
 To try out the toolkit, example videos (located at examples/videos) for calibration, raw videos for trimming and tracking, as well as trimmed videos, are provided for a quick try of the workflow.
 
-Below is included further information on multi-camera recording setups in OBS, light-based approach for cameras synchronisation, and details on code implementation.
+Below is a guide on installation (from the TrackStudio's paper) as well as further information on multi-camera recording setups in OBS, light-based approach for cameras synchronisation, and details on code implementation.
 
 <p align="center">
   <img src="examples/images/TrackStudio_GIF.gif" width="90%">
 </p>
 
+## Installation
+
+### Pre-requisites
+
+For installation purposes, the user should already have Anaconda software installed (https://www.anaconda.com/docs/getting-started/anaconda/install).
+
+Before installing TrackStudio toolkit, download the content of this GitHub repository and the virtual environments files from FigShare (https://doi.org/10.6084/m9.figshare.30556418.v1). After unzipping all the files, the virtual environment files must be inside the TrackStudio toolkit unzipped folder.
+
+### Installation process
+  
+To install TrackStudio you need to double-click the installation file (install_TrackStudio.bat). The installation process may take up to 40 minutes. In the unlikely event the installer can’t automatically find your Anaconda folder, you’ll be prompted to enter the path.
+
+<u>During installation (see Figure 1 below), the installer will:<u>
+- Set up MediaPipe virtual environment → prompts “press any key” to continue.
+- Set up Anipose virtual environment (this is the longest step) and runs a quick installation test → prompts “press any key.”.
+- Update TrackStudio files → prompts “press any key.”.
+- Finalise the setup → final “press any key,” and you’re done.
+
+Note: The first launch of the GUI may take extra time while initial variables are created – wait until the GUI has been fully initiated before trying anything else. If the GUI does not start after 10-30s, check if the paths within the 'batch_executable.bat' and the 'TrackStudio.vbs' files have been updated correctly. 
+
+These paths should have been updated automatically. However, in case of an issue with the process:
+
+- The path in the second line of 'TrackStudio.vbs' should have been updated from the default 'D:\Markerless_Tracking_GUI_git\batch_executable.bat' to the path of the folder where the track studio github repository has been unzipped.
+- Similarly, the path in the last line of the 'batch_executable.bat' should point towards the location of the 'Python_TS_GUI.py' file in your computer (where you've unzipped the GitHub repository) rather than the default 'D:\Markerless_Tracking_GUI_git\Python_TS_GUI.py' and the path to the batch file for activating Anaconda in the third line of the 'batch_executable.bat' should point towards the one within your Anaconda installation.
+
+<p align="center">
+  <img src="examples/images/TrackStudio_Installation_Process.png" width="90%">
+</p>
+
+**Figure 1** _Installation window visualisation, indicating where each step takes place._
+ 
+After installation, the TrackStudio GUI can be launched by double-clicking the application file (TrackStudio.vbs). Advanced code information is provided on the GitHub page.
+
+There is an ‘examples’ folder provided for people to go through examples using the instructions from the ‘Usage’ section below and familiarise themselves with the GUI. The examples are located in ‘TrackStudio/examples/videos’ within the GitHub page. They contain .mp4 recordings from 3 web cameras with file naming suffix ‘-cam([A-Z])’ of a person performing an action with their right hand. People can try the trimming functionality of the GUI by trimming videos by an LED light approach using the ‘raw-videos’ folder, or performing 2D annotation using the ‘trimmed-videos’ folder and subsequently performing camera calibration and 3D annotation using the ‘calibration’ folder and the subsequently generated files.
 
 ## Multi-camera recording setup via OBS software
 
@@ -19,7 +53,7 @@ Below is included further information on multi-camera recording setups in OBS, l
   
 _N.B. On each new OBS instance you will be prompted with a warning: click on Launch anyway._
 - Place the OBS instances so that each window is fully visible (non-overlapping, with nothing obstructing the windows), ideally on a separate monitor.
-- Starting from the top window, configure each OBS instance for their respective camera. Below is an example of 4 “Logitech Brio” cameras, with name extensions for each being camA, camB, camC, and camD respectively. For each OBS instance (see Figure 1 below):
+- Starting from the top window, configure each OBS instance for their respective camera. Below is an example of 4 “Logitech Brio” cameras, with name extensions for each being camA, camB, camC, and camD respectively. For each OBS instance (see Figure 2 below):
 - Double-click on “_camD” (under Sources), which is what 1 of the Brio cameras is named as.
 - From the Device dropdown menu find the camera (Logitech Brio).
 
@@ -31,9 +65,9 @@ _N.B. The 3 cameras have the same ‘computer name’, select them one after the
   <img src="examples/images/OBS_cameraSettings_all.png" width="90%">
 </p>
 
-**Figure 1** _Example of camera settings adjustments as per the above text._
+**Figure 2** _Example of camera settings adjustments as per the above text._
  
-- Double-click on Settings (under Controls), move to the Advanced tab and change the Filename formatting to %CCYY-%MM-%DD %hh-%mm-%ss_camX (where X is the letter – A, B or C – corresponding to the camera you are setting). Click on Apply and close (see Figure 2 below).
+- Double-click on Settings (under Controls), move to the Advanced tab and change the Filename formatting to %CCYY-%MM-%DD %hh-%mm-%ss_camX (where X is the letter – A, B or C – corresponding to the camera you are setting). Click on Apply and close (see Figure 3 below).
 - In settings -> Hotkeys: ‘Start recording’ should be CTRL + ENTER and ‘Stop recording’ should be CTRL + END (see Figure 2 below).
 - Make sure you followed this procedure for all the cameras.
 
@@ -41,7 +75,7 @@ _N.B. The 3 cameras have the same ‘computer name’, select them one after the
   <img src="examples/images/OBS_settings.png" width="90%">
 </p>
 
-**Figure 2** _Example of OBS camera naming and hotkeys settings as per the above text._
+**Figure 3** _Example of OBS camera naming and hotkeys settings as per the above text._
 
 ### Camera positioning
 - Orient the cameras so that the workspace, the objects and the hand are visible by all the cameras at all times (or at least by 2 cameras).
