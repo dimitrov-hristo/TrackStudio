@@ -1,13 +1,37 @@
 @echo off
 :: Step 1: Find Conda Info Path
 :: Find where conda is installed by using `conda info --base`
-for /f "tokens=*" %%a in ('conda info --base') do set base_path=%%a
+set "base_path="
+set "CONDA_BAT="
 
-:: Ensure the base_path is set
-if "%base_path%"=="" (
-    echo Could not find the Conda base path.
-    exit /b 1
+for %%D in (
+    "%USERPROFILE%\anaconda3"
+    "%USERPROFILE%\miniconda3"
+    "%LOCALAPPDATA%\anaconda3"
+    "%LOCALAPPDATA%\miniconda3"
+    "C:\ProgramData\anaconda3"
+    "C:\ProgramData\miniconda3"
+) do (
+    if exist "%%~D\condabin\conda.bat" (
+        set "base_path=%%~D"
+        set "CONDA_BAT=%%~D\condabin\conda.bat"
+        goto found_conda
+    )
 )
+
+where conda >nul 2>nul
+if %errorlevel%==0 (
+    for /f "delims=" %%a in ('conda info --base') do set "base_path=%%a"
+    set "CONDA_BAT=%base_path%\condabin\conda.bat"
+    goto found_conda
+)
+
+echo Could not find Anaconda or Miniconda.
+pause
+exit /b 1
+
+:found_conda
+echo Found conda base path at: %base_path%
 
 :: Get the current directory of the batch script
 set "current_dir=%cd%"
